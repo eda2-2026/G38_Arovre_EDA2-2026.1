@@ -36,7 +36,7 @@ No console do servidor, você pode acompanhar as rotações sendo realizadas em 
 *(Insira o link do vídeo aqui)*
 
 ## Screenshots
-*(Insira suas screenshots aqui na pasta imagens/)*
+![Página Principal](imagens/paginaPrincipal.png)
 
 ## Como Executar (Fácil)
 
