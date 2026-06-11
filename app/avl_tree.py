@@ -117,7 +117,8 @@ class AVLTree:
                 if len(root.values) > 0:
                     # Se ainda tem jogadores com essa chave, não remove o nó
                     return root
-                
+            
+            # Se player_id é None ou a lista de valores ficou vazia, remove o nó
             # Nó com apenas um filho ou nenhum
             if root.left is None:
                 return root.right
@@ -128,6 +129,7 @@ class AVLTree:
             temp = self.get_min_value_node(root.right)
             root.key = temp.key
             root.values = temp.values
+            # Remove o sucessor (não passamos player_id pois queremos remover o nó inteiro)
             root.right = self._delete(root.right, temp.key, None)
 
         return self._rebalance(root)
