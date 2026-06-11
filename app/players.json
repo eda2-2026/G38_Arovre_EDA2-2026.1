@@ -1,0 +1,30 @@
+[
+    {
+        "id": "1",
+        "nome": "Neymar",
+        "gols": 100,
+        "assistencias": 50,
+        "minutos_jogados": 3000
+    },
+    {
+        "id": "2",
+        "nome": "Vini Jr",
+        "gols": 80,
+        "assistencias": 60,
+        "minutos_jogados": 2500
+    },
+    {
+        "id": "1781218487299",
+        "nome": "Jorge",
+        "gols": 0,
+        "assistencias": 0,
+        "minutos_jogados": 0
+    },
+    {
+        "id": "1781218502480",
+        "nome": "Arthur",
+        "gols": 20,
+        "assistencias": 90,
+        "minutos_jogados": 3000
+    }
+]
