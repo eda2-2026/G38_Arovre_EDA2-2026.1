@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Pelada - AVL Ranking</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Organizador de Pelada</h1>
+            <p>Leaderboard de Jogadores (Árvore AVL Balanceada)</p>
+        </header>
+
+        <main class="dashboard">
+            <section class="panel form-panel">
+                <h2>Adicionar Jogador</h2>
+                <form id="add-player-form">
+                    <div class="form-group">
+                        <label for="nome">Nome:</label>
+                        <input type="text" id="nome" name="nome" required placeholder="Ex: Neymar">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gols">Gols:</label>
+                        <input type="number" id="gols" name="gols" required min="0" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assistencias">Assistências:</label>
+                        <input type="number" id="assistencias" name="assistencias" required min="0" value="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minutos">Minutos Jogados:</label>
+                        <input type="number" id="minutos" name="minutos" required min="0" value="0">
+                    </div>
+
+                    <button type="submit" class="btn-primary">Adicionar ao Ranking</button>
+                    <div id="form-feedback" class="feedback"></div>
+                </form>
+
+                <h2 style="margin-top: 2rem;">Buscar Jogador</h2>
+                <div class="form-group" style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="busca-nome" placeholder="Digite o nome...">
+                    <button id="btn-buscar" class="btn-secondary" style="width: auto;">Buscar</button>
+                </div>
+                <button id="btn-limpar-busca" class="btn-secondary" style="display: none;">Limpar Busca</button>
+            </section>
+
+            <!-- Painel da Direita: Lista e Controles -->
+            <section class="panel list-panel">
+                <div class="list-header">
+                    <h2>Leaderboard</h2>
+                    
+                    <div class="controls">
+                        <div class="control-group">
+                            <label for="criterio">Ranking por:</label>
+                            <select id="criterio">
+                                <option value="gols">Gols ⚽</option>
+                                <option value="assistencias">Assistências 🅰️</option>
+                                <option value="minutos_jogados">Minutos Jogados ⏱️</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="status-container" style="margin-top: 15px; font-weight: 600; color: var(--primary-color); font-size: 0.95rem; min-height: 1.5rem;">
+                    <!-- Mensagens de status aparecerão aqui -->
+                </div>
+
+                <div class="table-container">
+                    <table id="jogadores-table">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Nome</th>
+                                <th>Gols</th>
+                                <th>Assistências</th>
+                                <th>Minutos</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranking-tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 # app/main.py
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.models import Player
 from app.avl_tree import AVLTree
 import os
@@ -16,7 +17,10 @@ def load_players():
         with open(DATA_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
             return [Player(**p) for p in data]
-    return []
+    return [
+        Player(id="1", nome="Neymar", gols=100, assistencias=50, minutos_jogados=3000),
+        Player(id="2", nome="Vini Jr", gols=80, assistencias=60, minutos_jogados=2500)
+    ]
 
 def save_players(players):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -37,19 +41,27 @@ def rebuild_tree_instance(criterio, players):
 # Inicialização
 tree = rebuild_tree_instance(current_criterio, players_db)
 
+@app.get("/")
+async def read_index():
+    return FileResponse("static/index.html")
+
 @app.get("/api/ranking")
 def get_ranking(criterio: str = "gols"):
     global current_criterio, tree
     if criterio not in ["gols", "assistencias", "minutos_jogados"]:
         raise HTTPException(status_code=400, detail="Critério inválido")
     
+    # Se trocou o critério, reconstrói a árvore e as rotações de reconstrução serão logadas
     if criterio != current_criterio:
         new_tree = rebuild_tree_instance(criterio, players_db)
         tree = new_tree # Swap atômico
         current_criterio = criterio
         
     ranking = tree.in_order_reverse()
-    return ranking
+    events = list(tree.events)
+    tree.events = [] # Limpa para a próxima operação
+    
+    return {"ranking": ranking, "events": events}
 
 @app.post("/api/players")
 def add_player(player: Player):
@@ -81,6 +93,5 @@ def delete_player(id: str):
     
     return {"message": "Jogador removido com sucesso"}
 
-# Monte os arquivos estáticos após definir a API se a pasta existir
-if os.path.exists("static"):
-    app.mount("/", StaticFiles(directory="static", html=True), name="static")
+# Monte os arquivos estáticos na rota /static
+app.mount("/static", StaticFiles(directory="static"), name="static")

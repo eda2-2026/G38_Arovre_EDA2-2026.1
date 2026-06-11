@@ -9,7 +9,10 @@ def test_get_ranking_order():
     # Verify ranking by goals (default)
     response = client.get("/api/ranking?criterio=gols")
     assert response.status_code == 200
-    ranking = response.json()
+    data = response.json()
+    assert "ranking" in data
+    assert "events" in data
+    ranking = data["ranking"]
     assert len(ranking) >= 2
     # Check descending order
     for i in range(len(ranking) - 1):
@@ -19,7 +22,8 @@ def test_switch_criteria():
     # Verify ranking by assists
     response = client.get("/api/ranking?criterio=assistencias")
     assert response.status_code == 200
-    ranking = response.json()
+    data = response.json()
+    ranking = data["ranking"]
     # Check descending order by assists
     for i in range(len(ranking) - 1):
         assert ranking[i]["assistencias"] >= ranking[i+1]["assistencias"]
@@ -27,12 +31,14 @@ def test_switch_criteria():
     # Verify ranking by minutes_jogados
     response = client.get("/api/ranking?criterio=minutos_jogados")
     assert response.status_code == 200
-    ranking = response.json()
+    data = response.json()
+    ranking = data["ranking"]
     for i in range(len(ranking) - 1):
         assert ranking[i]["minutos_jogados"] >= ranking[i+1]["minutos_jogados"]
 
 def test_add_and_delete_player():
-    player_id = "test_999"
+    import uuid
+    player_id = f"test_{uuid.uuid4()}"
     new_player = {
         "id": player_id,
         "nome": "Test Player",
@@ -47,7 +53,8 @@ def test_add_and_delete_player():
     
     # 2. Verify player is at the top of ranking
     response = client.get("/api/ranking?criterio=gols")
-    ranking = response.json()
+    data = response.json()
+    ranking = data["ranking"]
     assert ranking[0]["id"] == player_id
     assert ranking[0]["gols"] == 999
     
@@ -57,7 +64,8 @@ def test_add_and_delete_player():
     
     # 4. Verify player is gone
     response = client.get("/api/ranking?criterio=gols")
-    ranking = response.json()
+    data = response.json()
+    ranking = data["ranking"]
     assert all(p["id"] != player_id for p in ranking)
 
 def test_invalid_criteria():
@@ -73,7 +81,8 @@ def test_delete_non_existent():
 def test_add_duplicate_id():
     # First, get an existing ID
     response = client.get("/api/ranking")
-    existing_player = response.json()[0]
+    data = response.json()
+    existing_player = data["ranking"][0]
     
     duplicate_player = {
         "id": existing_player["id"],

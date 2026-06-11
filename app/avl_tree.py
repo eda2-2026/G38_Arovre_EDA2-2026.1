@@ -10,6 +10,7 @@ class AVLNode:
 class AVLTree:
     def __init__(self):
         self.root = None
+        self.events = []
 
     def get_height(self, node):
         if not node:
@@ -22,6 +23,9 @@ class AVLTree:
         return self.get_height(node.left) - self.get_height(node.right)
 
     def right_rotate(self, y):
+        msg = f"Rotação Simples à Direita (RR) no nó {y.key}"
+        self.events.append(msg)
+        print(f"[AVL] {msg}")
         x = y.left
         t2 = x.right
         x.right = y
@@ -31,6 +35,9 @@ class AVLTree:
         return x
 
     def left_rotate(self, x):
+        msg = f"Rotação Simples à Esquerda (LL) no nó {x.key}"
+        self.events.append(msg)
+        print(f"[AVL] {msg}")
         y = x.right
         t2 = y.left
         y.left = x
@@ -51,6 +58,9 @@ class AVLTree:
             if self.get_balance(root.left) >= 0:
                 return self.right_rotate(root)
             else:
+                msg = f"Rotação Dupla Esquerda-Direita (LR) no nó {root.key}"
+                self.events.append(msg)
+                print(f"[AVL] {msg}")
                 root.left = self.left_rotate(root.left)
                 return self.right_rotate(root)
         
@@ -59,6 +69,9 @@ class AVLTree:
             if self.get_balance(root.right) <= 0:
                 return self.left_rotate(root)
             else:
+                msg = f"Rotação Dupla Direita-Esquerda (RL) no nó {root.key}"
+                self.events.append(msg)
+                print(f"[AVL] {msg}")
                 root.right = self.right_rotate(root.right)
                 return self.left_rotate(root)
 

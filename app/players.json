@@ -14,17 +14,17 @@
         "minutos_jogados": 2500
     },
     {
-        "id": "3",
-        "nome": "Rodrygo",
-        "gols": 40,
-        "assistencias": 30,
-        "minutos_jogados": 1800
+        "id": "1781218487299",
+        "nome": "Jorge",
+        "gols": 0,
+        "assistencias": 0,
+        "minutos_jogados": 0
     },
     {
-        "id": "4",
-        "nome": "Endrick",
-        "gols": 10,
-        "assistencias": 5,
-        "minutos_jogados": 500
+        "id": "1781218502480",
+        "nome": "Arthur",
+        "gols": 20,
+        "assistencias": 90,
+        "minutos_jogados": 3000
     }
 ]
