@@ -84,3 +84,12 @@ def test_avl_right_left_rotation():
     assert tree.root.key == 2
     assert tree.root.left.key == 1
     assert tree.root.right.key == 3
+
+def test_avl_delete():
+    tree = AVLTree()
+    p1 = Player(id="1", nome="A", gols=5, assistencias=0, minutos_jogados=0)
+    tree.insert(p1.gols, p1)
+    
+    tree.delete(p1.gols, p1.id)
+    assert tree.root is None
+
