@@ -33,7 +33,7 @@ A Árvore AVL resolve o problema de degeneração de árvores binárias comuns. 
 No console do servidor, você pode acompanhar as rotações sendo realizadas em tempo real para fins didáticos.
 
 ## Vídeo
-*(Insira o link do vídeo aqui)*
+https://youtu.be/wkJ1ST6Y9j4
 
 ## Screenshots
 ![Página Principal](imagens/paginaPrincipal.png)
